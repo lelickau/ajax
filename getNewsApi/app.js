@@ -93,13 +93,32 @@ function onGetResponse(err, res) {
 function renderNews(news) {
   const newsContainer = document.querySelector('.news-container .row');
 
+  let fragment = '';
   news.forEach(item => {
-    newsTemplate(item);
+    const elem = newsTemplate(item);
+    fragment += elem;
   })
+  newsContainer.insertAdjacentHTML('afterbegin', fragment);
 }
 
 //
-function newsTemplate(news) {
-
+function newsTemplate({ urlToImage, title, url, description }) {
+  return `
+  <div class="col s12">
+  <div class="card">
+    <div class="card-image">
+      <img src="${urlToImage}">
+      <span class="card-title">${title || ''}</span>
+    </div>
+    <div class="card-content">
+      <p>${description || ''}</p>
+    </div>
+    <div class="card-action">
+      <a href="${url}">Read more</a>
+    </div>
+  </div>
+</div>
+  `
 }
 
+// 
